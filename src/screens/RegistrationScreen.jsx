@@ -35,7 +35,6 @@ export default function RegistrationScreen() {
 
   const onPress = () => {
     console.log('login:', login, 'email:', email, 'password:', password);
-    navigation.navigate('Home');
   };
 
   return (
