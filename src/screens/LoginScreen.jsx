@@ -90,11 +90,14 @@ export default function LoginScreen() {
               />
             </View>
           </KeyboardAvoidingView>
+
           <TouchableOpacity style={styles.button} onPress={onPress}>
             <Text style={styles.buttonText}>Login</Text>
           </TouchableOpacity>
+
           <View style={styles.bottomText}>
             <Text style={styles.text}>Dont have account? </Text>
+
             <TouchableOpacity onPress={() => navigation.navigate('Register')}>
               <Text style={styles.text}>Register</Text>
             </TouchableOpacity>

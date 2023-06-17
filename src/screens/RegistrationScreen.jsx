@@ -58,6 +58,7 @@ export default function RegistrationScreen() {
               />
             )}
           </ImageBackground>
+
           <Text style={styles.header}>Registration</Text>
           <KeyboardAvoidingView
             behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
@@ -130,11 +131,14 @@ export default function RegistrationScreen() {
               />
             </View>
           </KeyboardAvoidingView>
+
           <TouchableOpacity style={styles.button} onPress={onPress}>
             <Text style={styles.buttonText}>Register</Text>
           </TouchableOpacity>
+
           <View style={styles.bottomText}>
             <Text style={styles.text}>Have account? </Text>
+
             <TouchableOpacity onPress={() => navigation.navigate('Login')}>
               <Text style={styles.text}>Login</Text>
             </TouchableOpacity>

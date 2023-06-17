@@ -22,7 +22,12 @@ export default function App() {
     <>
       <StatusBar style="auto" />
       <NavigationContainer>
-        <MainNavigator.Navigator initialRouteName="Login">
+        <MainNavigator.Navigator
+          initialRouteName="Login"
+          screenOptions={{
+            headerShown: false,
+          }}
+        >
           <MainNavigator.Screen name="Login" component={LoginScreen} />
           <MainNavigator.Screen
             name="Register"
