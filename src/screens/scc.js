@@ -8,6 +8,8 @@ export const styles = StyleSheet.create({
   container: {
     position: 'relative',
     marginTop: 'auto',
+    // borderWidth: 1,
+    // borderStyle: "solid",
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
     paddingHorizontal: 16,
@@ -25,7 +27,9 @@ export const styles = StyleSheet.create({
     left: '50%',
     borderRadius: 16,
     transform: [{ translateX: -50 }],
-   
+    // overflow:'hidden',
+    // borderWidth: 1,
+    // borderStyle: "solid",
   },
   icon: {
     position: 'absolute',
@@ -37,13 +41,13 @@ export const styles = StyleSheet.create({
     flex: 1,
     width: null,
     height: null,
-    
+    // opacity: 0.6
   },
   input: {
     height: 50,
     width: null,
     backgroundColor: '#F6F6F6',
-   
+    // border: 1 'solid' '#E8E8E8',
     borderWidth: 1,
     borderStyle: 'solid',
     borderRadius: 8,
@@ -52,22 +56,22 @@ export const styles = StyleSheet.create({
     padding: 15,
     fontFamily: 'Roboto',
     fontStyle: 'normal',
-   
+    // fontWeight: 400,
     fontSize: 16,
     lineHeight: 19,
     color: '#BDBDBD',
   },
   header: {
-   
+    // width: 160,
     height: 35,
-   
+    // left: calc((50 % -160) / 2 + 0.5),
     fontFamily: 'Roboto',
     fontStyle: 'normal',
     fontWeight: 500,
     fontSize: 30,
     lineHeight: 35,
     textAlign: 'center',
-  
+    // letterSpacing: 0.01em,
     color: '#212121',
     marginBottom: 33,
   },
@@ -103,5 +107,32 @@ export const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',
+  },
+  bottomNavigation: {
+    height: 40,
+    width: 70,
+    borderRadius: 20,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  customHeader: {
+    position: 'relative',
+    // display: "flex",
+    // flexDirection: "row",
+    paddingVertical: 11,
+    borderBottomWidth: 1,
+    borderColor: '#BDBDBD',
+    marginTop: 30,
+  },
+  customHeaderText: {
+    fontFamily: 'Roboto',
+    fontStyle: 'normal',
+    fontWeight: 500,
+    fontSize: 17,
+    lineHeight: 22,
+    textAlign: 'center',
+    letterSpacing: -0.408,
+    color: '#212121',
   },
 });
