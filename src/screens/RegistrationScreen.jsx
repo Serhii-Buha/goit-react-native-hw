@@ -20,7 +20,7 @@ import { useNavigation } from '@react-navigation/native';
 import { Entypo } from '@expo/vector-icons';
 import { styles } from './scc';
 
-export default function RegistrationScreen() {
+const RegistrationScreen = () => {
   const [passwordVisible, setPasswordVisible] = useState(true);
   const [photo, setPhoto] = useState(null);
   const [focused, setFocused] = useState(null);
@@ -29,12 +29,15 @@ export default function RegistrationScreen() {
   const [password, setPassword] = useState('');
   const navigation = useNavigation();
 
+  const haveParam = email && password && login;
+
   const setFocus = e => setFocused(e._dispatchInstances.memoizedProps.name);
 
   const setBlur = () => setFocused(null);
 
   const onPress = () => {
     console.log('login:', login, 'email:', email, 'password:', password);
+    navigation.navigate('Home', { screen: 'Posts' });
   };
 
   return (
@@ -58,7 +61,6 @@ export default function RegistrationScreen() {
               />
             )}
           </ImageBackground>
-
           <Text style={styles.header}>Registration</Text>
           <KeyboardAvoidingView
             behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
@@ -78,10 +80,6 @@ export default function RegistrationScreen() {
               onFocus={setFocus}
               onBlur={setBlur}
             />
-          </KeyboardAvoidingView>
-          <KeyboardAvoidingView
-            behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
-          >
             <TextInput
               style={
                 focused === 'email'
@@ -97,10 +95,6 @@ export default function RegistrationScreen() {
               onFocus={setFocus}
               onBlur={setBlur}
             />
-          </KeyboardAvoidingView>
-          <KeyboardAvoidingView
-            behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
-          >
             <View style={{ position: 'relative' }}>
               <TextInput
                 style={
@@ -131,14 +125,18 @@ export default function RegistrationScreen() {
               />
             </View>
           </KeyboardAvoidingView>
-
-          <TouchableOpacity style={styles.button} onPress={onPress}>
+          <TouchableOpacity
+            style={
+              haveParam
+                ? styles.button
+                : { ...styles.button, backgroundColor: '#bdbdbd' }
+            }
+            onPress={onPress}
+          >
             <Text style={styles.buttonText}>Register</Text>
           </TouchableOpacity>
-
           <View style={styles.bottomText}>
             <Text style={styles.text}>Have account? </Text>
-
             <TouchableOpacity onPress={() => navigation.navigate('Login')}>
               <Text style={styles.text}>Login</Text>
             </TouchableOpacity>
@@ -147,4 +145,6 @@ export default function RegistrationScreen() {
       </TouchableWithoutFeedback>
     </ImageBackground>
   );
-}
+};
+
+export default RegistrationScreen;
