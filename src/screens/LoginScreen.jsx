@@ -20,17 +20,23 @@ import { useNavigation } from '@react-navigation/native';
 import { Entypo } from '@expo/vector-icons';
 import { styles } from './scc';
 
-export default function LoginScreen() {
+const LoginScreen = () => {
   const [passwordVisible, setPasswordVisible] = useState(true);
   const [focused, setFocused] = useState(null);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
   const navigation = useNavigation();
 
+  const haveParam = email && password;
+
   const setFocus = e => setFocused(e._dispatchInstances.memoizedProps.name);
+
   const setBlur = () => setFocused(null);
+
   const onPress = () => {
     console.log('email:', email, 'password:', password);
+    navigation.navigate('Home', { screen: 'Posts' });
   };
 
   return (
@@ -56,10 +62,6 @@ export default function LoginScreen() {
               onFocus={setFocus}
               onBlur={setBlur}
             />
-          </KeyboardAvoidingView>
-          <KeyboardAvoidingView
-            behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
-          >
             <View style={{ position: 'relative' }}>
               <TextInput
                 style={
@@ -90,14 +92,19 @@ export default function LoginScreen() {
               />
             </View>
           </KeyboardAvoidingView>
-
-          <TouchableOpacity style={styles.button} onPress={onPress}>
+          <TouchableOpacity
+            style={
+              haveParam
+                ? styles.button
+                : { ...styles.button, backgroundColor: '#bdbdbd' }
+            }
+            onPress={onPress}
+            disabled={!haveParam}
+          >
             <Text style={styles.buttonText}>Login</Text>
           </TouchableOpacity>
-
           <View style={styles.bottomText}>
             <Text style={styles.text}>Dont have account? </Text>
-
             <TouchableOpacity onPress={() => navigation.navigate('Register')}>
               <Text style={styles.text}>Register</Text>
             </TouchableOpacity>
@@ -106,4 +113,6 @@ export default function LoginScreen() {
       </TouchableWithoutFeedback>
     </ImageBackground>
   );
-}
+};
+
+export default LoginScreen;
