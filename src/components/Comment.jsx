@@ -15,7 +15,7 @@ import {
   Dimensions,
 } from 'react-native';
 
-const Comment = ({ ind }) => {
+export default function Comment({ ind }) {
   return (
     <View
       style={{
@@ -42,7 +42,7 @@ const Comment = ({ ind }) => {
       </View>
     </View>
   );
-};
+}
 
 const commentStyles = StyleSheet.create({
   image: {
@@ -81,5 +81,3 @@ const commentStyles = StyleSheet.create({
     width: 1,
   },
 });
-
-export default Comment;
