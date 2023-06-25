@@ -11,6 +11,8 @@ import { Feather } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { styles } from '../screens/scc';
+// import CommentsScreen from "../../screens/CommentsScreen";
+// import MapScreen from "../../screens/MapScreen";
 import CustomHeader from './CustomHeader';
 
 const HomeNav = createBottomTabNavigator();
@@ -105,7 +107,6 @@ const Home = ({ navigation }) => {
                 <CustomHeader title={title} options={options.headerStyle} />
               );
             },
-            tabBarStyle: { display: 'none' },
           }}
         />
         <HomeNav.Screen
@@ -115,7 +116,72 @@ const Home = ({ navigation }) => {
             headerShown: false,
           }}
         />
+        {/* <HomeNav.Screen
+          name="Comments"
+          component={CommentsScreen}
+          options={{
+            header: ({ navigation, route, options }) => {
+              const title = route.name;
+              return (
+                <CustomHeader title={title} options={options.headerStyle} />
+              );
+            },
+            tabBarIcon: () => {},
+          }}
+          // options={{
+          //   headerShown: false,
+          // }}
+        />
+        <HomeNav.Screen
+          name="Map"
+          component={MapScreen}
+          options={{
+            header: ({ navigation, route, options }) => {
+              const title = route.name;
+              return (
+                <CustomHeader title={title} options={options.headerStyle} />
+              );
+            },
+            tabBarIcon: () => {return (
+              <Feather
+                name="user"
+                size={0}
+                color={"#ffffff"}
+              />
+            );},
+          }}
+          // options={{
+          //   headerShown: false,
+          // }}
+        /> */}
       </HomeNav.Navigator>
+
+      {/* <PostNav.Navigator>
+        <PostNav.Screen
+          name="Comments"
+          component={CommentsScreen}
+          options={{
+            header: ({ navigation, route, options }) => {
+              const title = route.name;
+              return (
+                <CustomHeader title={title} options={options.headerStyle} />
+              );
+            },
+          }}
+        />
+        <PostNav.Screen
+          name="Map"
+          component={MapScreen}
+          options={{
+            header: ({ navigation, route, options }) => {
+              const title = route.name;
+              return (
+                <CustomHeader title={title} options={options.headerStyle} />
+              );
+            },
+          }}
+        />
+      </PostNav.Navigator> */}
     </>
   );
 };
