@@ -19,6 +19,8 @@ import { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { Entypo } from '@expo/vector-icons';
 import { styles } from './scc';
+import { useDispatch } from 'react-redux';
+import { createUser } from '../redux/slice';
 
 const RegistrationScreen = () => {
   const [passwordVisible, setPasswordVisible] = useState(true);
@@ -28,6 +30,7 @@ const RegistrationScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigation = useNavigation();
+  const dispatch = useDispatch();
 
   const haveParam = email && password && login;
 
@@ -37,6 +40,13 @@ const RegistrationScreen = () => {
 
   const onPress = () => {
     console.log('login:', login, 'email:', email, 'password:', password);
+    const user = {
+      login,
+      email,
+      password,
+      photo,
+    };
+    dispatch(createUser(user));
     navigation.navigate('Home', { screen: 'Posts' });
   };
 
@@ -44,6 +54,7 @@ const RegistrationScreen = () => {
     <ImageBackground source={ImageBG} style={styles.imageBG}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.container}>
+          {/* <Image style={styles.image} /> */}
           <ImageBackground source={photo} style={styles.image}>
             {!photo ? (
               <AntDesign
