@@ -136,3 +136,25 @@ export const styles = StyleSheet.create({
     color: '#212121',
   },
 });
+
+const tt = [
+  {
+    geoLocation: { latitude: 48.464717, longitude: 35.046183 },
+    location: 'Hshshhs',
+    name: 'Hsgsh',
+    photoAssets: {
+      albumId: '-2075821635',
+      creationTime: 1687693535000,
+      duration: 0,
+      filename: 'a1784fd7-8752-42f8-801b-d2f40165700c.jpg',
+      height: 4000,
+      id: '47744',
+      mediaType: 'photo',
+      modificationTime: 1687693535000,
+      uri: 'file:///storage/emulated/0/DCIM/a1784fd7-8752-42f8-801b-d2f40165700c.jpg',
+      width: 3000,
+    },
+    photoUri:
+      'file:///data/user/0/host.exp.exponent/cache/ExperienceData/%2540anonymous%252FProject-9e4af958-5a3e-4202-a623-bf9598aa5ae0/Camera/a1784fd7-8752-42f8-801b-d2f40165700c.jpg',
+  },
+];
