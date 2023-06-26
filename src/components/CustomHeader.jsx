@@ -24,7 +24,7 @@ const CustomHeader = ({ title, options }) => {
             style={{
               marginLeft: 'auto',
               position: 'absolute',
-              right: 10,
+              right: 16,
               top: 10,
             }}
             onPress={() => navigation.navigate('Login')}
@@ -37,7 +37,7 @@ const CustomHeader = ({ title, options }) => {
             style={{
               marginLeft: 'auto',
               position: 'absolute',
-              left: 10,
+              left: 16,
               top: 10,
             }}
             onPress={() => navigation.navigate('Posts')}
