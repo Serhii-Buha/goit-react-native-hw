@@ -20,8 +20,9 @@ import * as MediaLibrary from 'expo-media-library';
 import * as Location from 'expo-location';
 import { styles } from './scc';
 import { useNavigation } from '@react-navigation/native';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addPost } from '../redux/slice';
+import { getEmail } from '../redux/selectors';
 
 const CreatePostsScreen = () => {
   const [permission, setPermission] = useState(null);
@@ -31,10 +32,11 @@ const CreatePostsScreen = () => {
   const [name, setName] = useState('');
   const [location, setLocation] = useState('');
   const [geoLocation, setGeoLocation] = useState(null);
+  const [haveParam, setHaveParam] = useState(false);
 
-  const haveParam = photoUri && !!name && !!location;
   const navigation = useNavigation();
   const dispatch = useDispatch();
+  const email = useSelector(getEmail);
 
   useEffect(() => {
     (async () => {
@@ -60,6 +62,10 @@ const CreatePostsScreen = () => {
     })();
   }, []);
 
+  useEffect(() => {
+    setHaveParam(photoUri && !!name && !!location);
+  }, [photoUri, name, location]);
+
   if (permission === null) {
     return <View />;
   }
@@ -68,116 +74,94 @@ const CreatePostsScreen = () => {
   }
 
   const onPostPress = async () => {
-    const photoAssets = await MediaLibrary.createAssetAsync(photoUri);
+    setHaveParam(false);
     const post = {
       name,
       location,
       geoLocation,
+      email,
       photoUri,
-      photoAssets,
     };
     console.log(post);
     dispatch(addPost(post));
     onDelPress();
     navigation.navigate('Posts');
   };
+
   const onDelPress = () => {
     setPhotoUri(null);
     setName('');
     setLocation('');
-    setGeoLocation(null);
   };
 
-  // const getImage = async () => {
-  //   const asset = await MediaLibrary.getAssetInfoAsync(photoUri);
-  //   console.log(asset.uri);
-  //   return asset.uri;
-  // };
+  const onShot = async () => {
+    if (cameraRef) {
+      const { uri } = await cameraRef.takePictureAsync({
+        quality: 1,
+        base64: true,
+      });
+      setPhotoUri(uri);
+    }
+  };
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <ScrollView
-        style={{
-          paddingHorizontal: 16,
-          paddingTop: 32,
-          paddingBottom: 10,
-          backgroundColor: 'white',
-          height: '100%',
-          display: 'flex',
-        }}
-      >
+      <ScrollView style={innerStyles.container}>
         {photoUri ? (
           <ImageBackground
             style={innerStyles.imageContainer}
             source={{
               uri: photoUri,
             }}
-          >
-            <View>
-              <View style={innerStyles.photoIcon}>
-                <MaterialIcons
-                  name="photo-camera"
-                  size={24}
-                  color={!photoUri ? '#BDBDBD' : 'white'}
-                  onPress={async () => {
-                    if (photoUri) {
-                      // await MediaLibrary.deleteAssetsAsync(photoUri);
-                      setPhotoUri(null);
-                    }
-                  }}
-                />
-              </View>
-            </View>
-          </ImageBackground>
+          ></ImageBackground>
         ) : (
           <Camera
             style={innerStyles.imageContainer}
             type={type}
             ref={setCameraRef}
+            ratio="1:1"
           >
             <View>
               <View style={innerStyles.photoIcon}>
                 <MaterialIcons
                   name="photo-camera"
                   size={24}
-                  color={!photoUri ? '#BDBDBD' : 'white'}
-                  onPress={async () => {
-                    if (cameraRef) {
-                      const { uri } = await cameraRef.takePictureAsync();
-                      // const asset = await MediaLibrary.createAssetAsync(uri);
-                      // console.log(uri);
-                      // console.log(asset);
-                      setPhotoUri(uri);
-                    }
-                  }}
+                  color={'#BDBDBD'}
+                  onPress={onShot}
                 />
               </View>
             </View>
           </Camera>
         )}
-        <TouchableOpacity
-          style={styles.text}
-          onPress={() => {
-            setType(
-              type === Camera.Constants.Type.back
-                ? Camera.Constants.Type.front
-                : Camera.Constants.Type.back
-            );
-          }}
-        >
-          <Text
-            style={{
-              ...innerStyles.innerText,
-              marginBottom: 10,
-              color: 'black',
-            }}
-          >
-            Flip camera
-          </Text>
-        </TouchableOpacity>
-        {/* <Text style={innerStyles.innerText}>
-          {!photoUri ? "Add photo" : "Edit photo"}
-        </Text> */}
+
+        <View style={innerStyles.buttonsContainer}>
+          <View style={innerStyles.smallButton}>
+            <MaterialIcons
+              name="flip-camera-android"
+              size={24}
+              color={photoUri ? '#bdbdbd' : 'black'}
+              onPress={
+                photoUri
+                  ? null
+                  : () => {
+                      setType(
+                        type === Camera.Constants.Type.back
+                          ? Camera.Constants.Type.front
+                          : Camera.Constants.Type.back
+                      );
+                    }
+              }
+            />
+          </View>
+          <View style={innerStyles.smallButton}>
+            <AntDesign
+              name="delete"
+              size={24}
+              color={!photoUri ? '#bdbdbd' : 'black'}
+              onPress={onDelPress}
+            />
+          </View>
+        </View>
         <KeyboardAvoidingView
           behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
         >
@@ -210,43 +194,65 @@ const CreatePostsScreen = () => {
           disabled={!haveParam}
           style={
             haveParam
-              ? styles.button
-              : { ...styles.button, backgroundColor: '#F6F6F6' }
+              ? innerStyles.button
+              : { ...innerStyles.button, backgroundColor: '#F6F6F6' }
           }
           onPress={onPostPress}
         >
           <Text
             style={
               haveParam
-                ? styles.buttonText
-                : { ...styles.buttonText, color: '#bdbdbd' }
+                ? innerStyles.buttonText
+                : { ...innerStyles.buttonText, color: '#bdbdbd' }
             }
           >
             Post
           </Text>
         </TouchableOpacity>
-        <View
-          style={{
-            ...styles.bottomNavigation,
-            marginTop: 'auto',
-            // marginHorizontal: "auto",
-            backgroundColor: '#F6F6F6',
-            alignSelf: 'center',
-          }}
-        >
-          <AntDesign
-            name="delete"
-            size={24}
-            color="#bdbdbd"
-            onPress={onDelPress}
-          />
-        </View>
       </ScrollView>
     </TouchableWithoutFeedback>
   );
 };
 
 const innerStyles = StyleSheet.create({
+  buttonsContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    // justifyContent: 'space-between',
+
+    gap: 20,
+    justifyContent: 'center',
+    marginTop: 10,
+  },
+  smallButton: {
+    height: 40,
+    width: 70,
+    borderRadius: 20,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 'auto',
+    backgroundColor: '#F6F6F6',
+    alignSelf: 'center',
+  },
+  container: {
+    paddingHorizontal: 16,
+    paddingTop: 16,
+    paddingBottom: 25,
+    backgroundColor: 'white',
+    height: '100%',
+    display: 'flex',
+  },
+  button: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 100,
+    height: 50,
+    width: null,
+    backgroundColor: '#FF6C00',
+    marginTop: 27,
+  },
   imageContainer: {
     display: 'flex',
     justifyContent: 'center',
