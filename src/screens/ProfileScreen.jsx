@@ -51,7 +51,7 @@ const ProfileScreen = () => {
           style={{
             marginLeft: 'auto',
             position: 'absolute',
-            right: 10,
+            right: 16,
             top: 10,
           }}
           onPress={() => navigation.navigate('Login')}
