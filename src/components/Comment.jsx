@@ -35,8 +35,8 @@ export default function Comment({ ind }) {
         }}
       >
         <Text style={commentStyles.text}>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptate,
-          placeat.
+          Really love your most recent photo. I’ve been trying to capture the
+          same thing for a few months and would love some tips!
         </Text>
         <Text style={commentStyles.date}>Comment Date</Text>
       </View>
