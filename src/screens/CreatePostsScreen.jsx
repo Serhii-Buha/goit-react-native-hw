@@ -19,7 +19,7 @@ import { Camera } from 'expo-camera';
 import * as MediaLibrary from 'expo-media-library';
 import * as Location from 'expo-location';
 import { styles } from './scc';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useIsFocused } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import { addPost } from '../redux/slice';
 import { getEmail } from '../redux/selectors';
@@ -38,13 +38,17 @@ const CreatePostsScreen = () => {
   const dispatch = useDispatch();
   const email = useSelector(getEmail);
 
+  const isFocused = useIsFocused();
+
   useEffect(() => {
-    (async () => {
-      const { status } = await Camera.requestCameraPermissionsAsync();
-      await MediaLibrary.requestPermissionsAsync();
-      setPermission(status === 'granted');
-    })();
-  }, []);
+    if (isFocused) {
+      (async () => {
+        const { status } = await Camera.requestCameraPermissionsAsync();
+        await MediaLibrary.requestPermissionsAsync();
+        setPermission(status === 'granted');
+      })();
+    }
+  }, [isFocused]);
 
   useEffect(() => {
     (async () => {
@@ -66,9 +70,10 @@ const CreatePostsScreen = () => {
     setHaveParam(photoUri && !!name && !!location);
   }, [photoUri, name, location]);
 
-  if (permission === null) {
+  if (!isFocused || permission === null) {
     return <View />;
   }
+
   if (permission === false) {
     navigation.navigate('Posts');
   }
@@ -135,7 +140,10 @@ const CreatePostsScreen = () => {
         )}
 
         <View style={innerStyles.buttonsContainer}>
-          <View style={innerStyles.smallButton}>
+          <Text style={innerStyles.innerText}>
+            {!photoUri ? 'Add photo' : 'Edit photo'}
+          </Text>
+          {/* <View style={innerStyles.smallButton}>
             <MaterialIcons
               name="flip-camera-android"
               size={24}
@@ -152,15 +160,15 @@ const CreatePostsScreen = () => {
                     }
               }
             />
-          </View>
-          <View style={innerStyles.smallButton}>
+          </View> */}
+          {/* <View style={innerStyles.smallButton}>
             <AntDesign
               name="delete"
               size={24}
               color={!photoUri ? '#bdbdbd' : 'black'}
               onPress={onDelPress}
             />
-          </View>
+          </View> */}
         </View>
         <KeyboardAvoidingView
           behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
@@ -209,6 +217,16 @@ const CreatePostsScreen = () => {
             Post
           </Text>
         </TouchableOpacity>
+        <View style={innerStyles.positionSmallButton}>
+          <View style={innerStyles.smallButton}>
+            <AntDesign
+              name="delete"
+              size={24}
+              color={!photoUri ? '#bdbdbd' : 'black'}
+              onPress={onDelPress}
+            />
+          </View>
+        </View>
       </ScrollView>
     </TouchableWithoutFeedback>
   );
@@ -219,10 +237,16 @@ const innerStyles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     // justifyContent: 'space-between',
-
-    gap: 20,
-    justifyContent: 'center',
+    // gap: 20,
+    // justifyContent: 'center',
     marginTop: 10,
+  },
+  positionSmallButton: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignSelf: 'center',
+    marginTop: 120,
   },
   smallButton: {
     height: 40,
