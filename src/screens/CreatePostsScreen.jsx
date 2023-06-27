@@ -133,6 +133,7 @@ const CreatePostsScreen = () => {
                   size={24}
                   color={'#BDBDBD'}
                   onPress={onShot}
+                  style={{ padding: 18 }}
                 />
               </View>
             </View>
@@ -218,14 +219,13 @@ const CreatePostsScreen = () => {
           </Text>
         </TouchableOpacity>
         <View style={innerStyles.positionSmallButton}>
-          <View style={innerStyles.smallButton}>
-            <AntDesign
-              name="delete"
-              size={24}
-              color={!photoUri ? '#bdbdbd' : 'black'}
-              onPress={onDelPress}
-            />
-          </View>
+          <AntDesign
+            name="delete"
+            size={24}
+            color={!photoUri ? '#bdbdbd' : 'black'}
+            onPress={onDelPress}
+            style={innerStyles.deleteButton}
+          />
         </View>
       </ScrollView>
     </TouchableWithoutFeedback>
@@ -248,9 +248,11 @@ const innerStyles = StyleSheet.create({
     alignSelf: 'center',
     marginTop: 120,
   },
-  smallButton: {
-    height: 40,
-    width: 70,
+  deleteButton: {
+    // height: 40,
+    // width: 70,
+    paddingHorizontal: 23,
+    paddingVertical: 8,
     borderRadius: 20,
     display: 'flex',
     justifyContent: 'center',
@@ -275,7 +277,7 @@ const innerStyles = StyleSheet.create({
     height: 50,
     width: null,
     backgroundColor: '#FF6C00',
-    marginTop: 27,
+    marginTop: 32,
   },
   imageContainer: {
     display: 'flex',
@@ -293,8 +295,8 @@ const innerStyles = StyleSheet.create({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    height: 60,
-    width: 60,
+    // height: 60,
+    // width: 60,
     backgroundColor: 'white',
     opacity: 0.5,
     borderRadius: 30,
@@ -306,16 +308,22 @@ const innerStyles = StyleSheet.create({
     fontSize: 16,
     lineHeight: 19,
     color: '#BDBDBD',
-    marginTop: 16,
-    marginBottom: 16,
+    // marginTop: 8,
+    // marginBottom: 16,
   },
   input: {
     height: 40,
-    marginTop: 20,
+    // marginTop: 32,
+    marginTop: 16,
     fontSize: 16,
     borderColor: '#E8E8E8',
     borderStyle: 'solid',
     borderBottomWidth: 1,
+  },
+  buttonText: {
+    color: '#BDBDBD',
+    textAlign: 'center',
+    fontSize: 16,
   },
 });
 
