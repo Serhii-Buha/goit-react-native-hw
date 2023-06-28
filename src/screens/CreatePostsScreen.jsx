@@ -218,7 +218,7 @@ const CreatePostsScreen = () => {
             Post
           </Text>
         </TouchableOpacity>
-        <View style={innerStyles.positionSmallButton}>
+        <View style={innerStyles.positionDeleteButton}>
           <AntDesign
             name="delete"
             size={24}
@@ -241,7 +241,7 @@ const innerStyles = StyleSheet.create({
     // justifyContent: 'center',
     marginTop: 10,
   },
-  positionSmallButton: {
+  positionDeleteButton: {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
@@ -263,7 +263,7 @@ const innerStyles = StyleSheet.create({
   },
   container: {
     paddingHorizontal: 16,
-    paddingTop: 16,
+    paddingTop: 32,
     paddingBottom: 25,
     backgroundColor: 'white',
     height: '100%',
