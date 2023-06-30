@@ -60,8 +60,8 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
     paddingTop: 60,
-    paddingBottom: 30,
-    minHeight: Dimensions.get('window').height - 120,
+    paddingBottom: 100,
+    minHeight: Dimensions.get('window').height - 90,
     backgroundColor: 'white',
     opacity: 1,
   },
@@ -78,8 +78,10 @@ const styles = StyleSheet.create({
   icon: {
     marginLeft: 'auto',
     position: 'absolute',
-    right: 10,
-    top: 10,
+    top: 12,
+    paddingVertical: 10,
+    right: 16,
+    paddingLeft: 16,
   },
   text: {
     fontFamily: 'Roboto',
@@ -89,6 +91,8 @@ const styles = StyleSheet.create({
     lineHeight: 35,
     textAlign: 'center',
     color: '#212121',
+
+    marginVertical: 32,
   },
 });
 
