@@ -1,34 +1,42 @@
-import {
-  Button,
-  TextInput,
-  View,
-  ScrollView,
-  Text,
-  StyleSheet,
-  ImageBackground,
-  Image,
-  TouchableOpacity,
-  KeyboardAvoidingView,
-  Platform,
-  TouchableWithoutFeedback,
-  Keyboard,
-} from 'react-native';
-import { postStyles } from '../components/Post';
-import React, { useState } from 'react';
+import { TextInput, View, ScrollView, StyleSheet, Image } from 'react-native';
+import { useState } from 'react';
 import Comment from '../components/Comment';
 import { AntDesign } from '@expo/vector-icons';
+import { useDispatch, useSelector } from 'react-redux';
+import { getPost, getUser } from '../redux/selectors';
+import { addComment } from '../redux/thunks';
 
-const CommentsScreen = () => {
-  const [comments, setComments] = useState([1, 2, 3, 4, 5]);
+const CommentsScreen = ({ route }) => {
+  const id = route.params.creationTime;
+  const url = route.params.url;
+  const { photoUri } = useSelector(getUser);
+  const comments = useSelector(getPost(id));
   const [newComment, setNewComment] = useState('');
+
+  const dispatch = useDispatch();
+
+  const setComment = () => {
+    if (!newComment) return;
+
+    const date = new Date();
+    const data = {
+      id,
+      text: newComment,
+      avatar: photoUri,
+      date: date.getTime(),
+    };
+
+    dispatch(addComment(data));
+    setNewComment('');
+  };
 
   return (
     <>
-      <View style={{ paddingHorizontal: 16, paddingTop: 32 }}>
+      <View style={commentStyles.container}>
         <ScrollView>
-          <Image style={commentStyles.image} />
-          {comments.map((el, ind) => (
-            <Comment key={el} ind={ind}></Comment>
+          <Image style={commentStyles.image} source={{ uri: url }} />
+          {comments?.map((el, ind) => (
+            <Comment key={el.date} ind={ind} comment={el}></Comment>
           ))}
         </ScrollView>
         <View
@@ -48,7 +56,12 @@ const CommentsScreen = () => {
             onChangeText={setNewComment}
           />
           <View style={commentStyles.icon}>
-            <AntDesign name="arrowup" size={24} color="white" />
+            <AntDesign
+              name="arrowup"
+              size={24}
+              color="white"
+              onPress={setComment}
+            />
           </View>
         </View>
       </View>
@@ -60,7 +73,6 @@ const commentStyles = StyleSheet.create({
   input: {
     fontFamily: 'Roboto',
     fontStyle: 'normal',
-    // fontWeight: 500,
     fontSize: 16,
     lineHeight: 19,
     height: 50,
@@ -89,7 +101,13 @@ const commentStyles = StyleSheet.create({
     position: 'absolute',
     right: 8,
     top: 24,
-    // transform: [{ translateY: 50 }],
+  },
+  container: {
+    paddingHorizontal: 16,
+    paddingTop: 2,
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
   },
 });
 
