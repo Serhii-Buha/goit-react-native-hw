@@ -34,7 +34,7 @@ const Post = ({ data }) => {
   return (
     <View style={postStyles.container}>
       <Image style={postStyles.image} source={{ uri: url }} />
-      {accEmail === email && (
+      {/* {accEmail === email && (
         <View style={postStyles.bottomNavigation}>
           <AntDesign
             name="delete"
@@ -43,7 +43,7 @@ const Post = ({ data }) => {
             onPress={delPostFunc}
           />
         </View>
-      )}
+      )} */}
       <Text style={{ ...postStyles.text, marginBottom: 11 }}>{name}</Text>
       <View
         style={{
@@ -87,6 +87,16 @@ const Post = ({ data }) => {
             {likes?.length ?? 0}
           </Text>
         </View>
+        {accEmail === email && (
+          <View style={postStyles}>
+            <AntDesign
+              name="delete"
+              size={24}
+              color={'#bdbdbd'}
+              onPress={delPostFunc}
+            />
+          </View>
+        )}
         <View style={postStyles.viewStyle}>
           <AntDesign
             name="enviromento"
@@ -124,18 +134,17 @@ export const postStyles = StyleSheet.create({
     lineHeight: 19,
     color: '#212121',
   },
-  bottomNavigation: {
-    height: 40,
-    width: 70,
+  deleteButton: {
+    // height: 40,
+    // width: 70,
+    paddingHorizontal: 23,
+    paddingVertical: 8,
     borderRadius: 20,
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#F6F6F6',
     alignSelf: 'center',
-    position: 'absolute',
-    top: 5,
-    left: 5,
   },
   viewStyle: {
     display: 'flex',
