@@ -43,7 +43,7 @@ const CommentsScreen = ({ route }) => {
           style={{
             position: 'relative',
             marginTop: 'auto',
-            paddingVertical: 16,
+            paddingBottom: 16,
           }}
         >
           <TextInput
@@ -82,6 +82,7 @@ const commentStyles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 25,
     paddingLeft: 16,
+    paddingVertical: 16,
   },
   image: {
     width: '100%',
@@ -100,11 +101,11 @@ const commentStyles = StyleSheet.create({
     alignItems: 'center',
     position: 'absolute',
     right: 8,
-    top: 24,
+    top: 8,
   },
   container: {
     paddingHorizontal: 16,
-    paddingTop: 2,
+    paddingTop: 32,
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
