@@ -1,32 +1,15 @@
-import {
-  Button,
-  TextInput,
-  View,
-  ScrollView,
-  Text,
-  StyleSheet,
-  ImageBackground,
-  Image,
-  TouchableOpacity,
-  KeyboardAvoidingView,
-  Platform,
-  TouchableWithoutFeedback,
-  Keyboard,
-  Dimensions,
-} from 'react-native';
+import { View, Text, StyleSheet, Image, Dimensions } from 'react-native';
+import moment from 'moment';
 
-export default function Comment({ ind }) {
+export default function Comment({ ind, comment }) {
   return (
     <View
       style={{
-        //   maxWidth:'100%',
-        marginTop: 24,
-        display: 'flex',
-        gap: 16,
+        ...commentStyles.container,
         flexDirection: ind % 2 === 0 ? 'row' : 'row-reverse',
       }}
     >
-      <Image source={null} style={commentStyles.image} />
+      <Image source={{ uri: comment.avatar }} style={commentStyles.image} />
       <View
         style={{
           ...commentStyles.textContainer,
@@ -34,17 +17,21 @@ export default function Comment({ ind }) {
           borderTopRightRadius: ind % 2 === 1 ? 0 : 6,
         }}
       >
-        <Text style={commentStyles.text}>
-          Really love your most recent photo. I’ve been trying to capture the
-          same thing for a few months and would love some tips!
+        <Text style={commentStyles.text}>{comment.text}</Text>
+        <Text style={commentStyles.date}>
+          {moment(+comment.date).format('D MMMM, YYYY | HH:mm')}
         </Text>
-        <Text style={commentStyles.date}>Comment Date</Text>
       </View>
     </View>
   );
 }
 
 const commentStyles = StyleSheet.create({
+  container: {
+    marginTop: 24,
+    display: 'flex',
+    gap: 16,
+  },
   image: {
     height: 28,
     width: 28,
