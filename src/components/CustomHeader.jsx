@@ -1,21 +1,18 @@
-import { Text, View } from 'react-native';
-import { NavigationContainer, useNavigation } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import { StatusBar } from 'expo-status-bar';
+import { StyleSheet, Text, View } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import { AntDesign } from '@expo/vector-icons';
-import { Octicons } from '@expo/vector-icons';
-import { Feather } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { styles } from '../screens/scc';
+import { useDispatch } from 'react-redux';
+import { logOutUser } from '../redux/thunks';
 
 const CustomHeader = ({ title, options }) => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
 
   return (
     <>
-      <View style={styles.customHeader}>
-        <Text style={styles.customHeaderText}>{title}</Text>
+      <View style={headerStyle.container}>
+        <Text style={headerStyle.text}>{title}</Text>
         {title === 'Posts' ? (
           <MaterialIcons
             name="logout"
@@ -24,12 +21,14 @@ const CustomHeader = ({ title, options }) => {
             style={{
               marginLeft: 'auto',
               position: 'absolute',
-              right: 16,
-              // top: 10,
               paddingVertical: 10,
+              right: 16,
               paddingLeft: 16,
             }}
-            onPress={() => navigation.navigate('Login')}
+            onPress={() => {
+              dispatch(logOutUser());
+              navigation.navigate('Login');
+            }}
           />
         ) : (
           <AntDesign
@@ -39,10 +38,8 @@ const CustomHeader = ({ title, options }) => {
             style={{
               marginLeft: 'auto',
               position: 'absolute',
-              left: 16,
-              // top: 10,
-              // paddingHorizontal: 10,
               paddingVertical: 10,
+              left: 16,
               paddingRight: 16,
             }}
             onPress={() => navigation.navigate('Posts')}
@@ -54,3 +51,24 @@ const CustomHeader = ({ title, options }) => {
 };
 
 export default CustomHeader;
+
+const headerStyle = StyleSheet.create({
+  container: {
+    position: 'relative',
+    paddingVertical: 11,
+    borderBottomWidth: 1,
+    borderColor: '#BDBDBD',
+    marginTop: 35,
+  },
+  text: {
+    fontFamily: 'Roboto',
+    fontStyle: 'normal',
+    fontWeight: 500,
+    fontSize: 17,
+    lineHeight: 22,
+    textAlign: 'center',
+    letterSpacing: -0.408,
+    color: '#212121',
+  },
+  icon: {},
+});
