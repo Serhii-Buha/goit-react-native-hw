@@ -64,7 +64,6 @@ const App = () => {
               <MainNav.Screen
                 name="Map"
                 component={MapScreen}
-                // geoLocation={params=>params.geoLocation}
                 options={{
                   header: ({ navigation, route, options }) => {
                     const title = route.name;
@@ -85,12 +84,5 @@ const App = () => {
     </>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
-});
 
 export default App;
