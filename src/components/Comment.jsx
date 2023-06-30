@@ -42,6 +42,7 @@ const commentStyles = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.03)',
     width: Dimensions.get('window').width - 100,
     padding: 16,
+    marginBottom: 24,
     flexGrow: 1,
     borderBottomLeftRadius: 6,
     borderBottomRightRadius: 6,
@@ -53,6 +54,8 @@ const commentStyles = StyleSheet.create({
     fontSize: 13,
     lineHeight: 18,
     color: '#212121',
+
+    marginBottom: 8,
   },
   date: {
     fontFamily: 'Roboto',
