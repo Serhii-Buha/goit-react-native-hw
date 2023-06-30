@@ -1,53 +1,52 @@
 import {
-  Button,
-  TextInput,
   View,
   ScrollView,
   Text,
   StyleSheet,
   ImageBackground,
-  Image,
-  TouchableOpacity,
-  KeyboardAvoidingView,
-  Platform,
-  TouchableWithoutFeedback,
-  Keyboard,
 } from 'react-native';
 import Post from '../components/Post';
-import { useState } from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
-import { useSelector } from 'react-redux';
-
-// const PostNav = createStackNavigator();
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { getPosts, getUser } from '../redux/selectors';
+import { getAllPosts } from '../redux/thunks';
 
 const PostsScreen = () => {
-  const posts = useSelector(state => state.posts.posts);
-  console.log(posts);
-  const { email, login, photo } = useSelector(state => state.user);
+  const dispatch = useDispatch();
+  const posts = useSelector(getPosts);
+  const { email, login, photoUri } = useSelector(getUser);
+
+  useEffect(() => {
+    dispatch(getAllPosts());
+  }, []);
 
   return (
     <>
-      <View style={postStyles.container}>
-        <View
-          style={{
-            display: 'flex',
-            flexDirection: 'row',
-            alignItems: 'center',
-          }}
-        >
-          <View>
-            <ImageBackground source={photo} style={postStyles.image} />
-          </View>
-          <View>
-            <Text style={postStyles.name}>{login}</Text>
-            <Text style={postStyles.email}>{email}</Text>
+      {!posts ? (
+        <View style={postStyles.container}>
+          <View
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center',
+            }}
+          >
+            <View>
+              <ImageBackground
+                source={{ uri: photoUri }}
+                style={postStyles.image}
+              />
+            </View>
+            <View>
+              <Text style={postStyles.name}>{login}</Text>
+              <Text style={postStyles.email}>{email}</Text>
+            </View>
           </View>
         </View>
-      </View>
-      {posts && (
-        <ScrollView style={{ paddingHorizontal: 16, paddingVertical: 5 }}>
+      ) : (
+        <ScrollView style={{ paddingHorizontal: 16, marginBottom: 16 }}>
           {posts.map(el => (
-            <Post key={el.name} data={el}></Post>
+            <Post key={el.creationTime} data={el}></Post>
           ))}
         </ScrollView>
       )}
