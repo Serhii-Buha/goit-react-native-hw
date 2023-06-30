@@ -22,34 +22,34 @@ const PostsScreen = () => {
 
   return (
     <>
-      {!posts ? (
-        <View style={postStyles.container}>
-          <View
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-              alignItems: 'center',
-            }}
-          >
-            <View>
-              <ImageBackground
-                source={{ uri: photoUri }}
-                style={postStyles.image}
-              />
-            </View>
-            <View>
-              <Text style={postStyles.name}>{login}</Text>
-              <Text style={postStyles.email}>{email}</Text>
-            </View>
+      {/* {!posts ? ( */}
+      <View style={postStyles.container}>
+        <View
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+          }}
+        >
+          <View>
+            <ImageBackground
+              source={{ uri: photoUri }}
+              style={postStyles.image}
+            />
+          </View>
+          <View>
+            <Text style={postStyles.name}>{login}</Text>
+            <Text style={postStyles.email}>{email}</Text>
           </View>
         </View>
-      ) : (
-        <ScrollView style={{ paddingHorizontal: 16, marginBottom: 16 }}>
-          {posts.map(el => (
-            <Post key={el.creationTime} data={el}></Post>
-          ))}
-        </ScrollView>
-      )}
+      </View>
+      {/* ) : ( */}
+      <ScrollView style={{ paddingHorizontal: 16 }}>
+        {posts.map(el => (
+          <Post key={el.creationTime} data={el}></Post>
+        ))}
+      </ScrollView>
+      {/* )} */}
     </>
   );
 };
@@ -65,7 +65,8 @@ const postStyles = StyleSheet.create({
     // marginTop:32,
   },
   container: {
-    paddingTop: 32,
+    // paddingTop: 32,
+    paddingVertical: 32,
     paddingHorizontal: 16,
   },
   name: {
