@@ -3,7 +3,6 @@ import {
   View,
   ScrollView,
   StyleSheet,
-  Image,
   ImageBackground,
   TouchableOpacity,
   Keyboard,
@@ -18,11 +17,10 @@ import { useState, useEffect } from 'react';
 import { Camera } from 'expo-camera';
 import * as MediaLibrary from 'expo-media-library';
 import * as Location from 'expo-location';
-import { styles } from './scc';
 import { useNavigation, useIsFocused } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
-import { addPost } from '../redux/slice';
 import { getEmail } from '../redux/selectors';
+import { addPost } from '../redux/thunks';
 
 const CreatePostsScreen = () => {
   const [permission, setPermission] = useState(null);
@@ -54,7 +52,6 @@ const CreatePostsScreen = () => {
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== 'granted') {
-        console.log('Permission to access location was denied');
       }
 
       let location = await Location.getCurrentPositionAsync({});
