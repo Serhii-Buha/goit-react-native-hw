@@ -19,6 +19,18 @@ const Home = ({ route, navigation }) => {
       return (
         <>
           <HomeNav.Screen
+            name="Posts"
+            component={PostsScreen}
+            options={{
+              header: ({ navigation, route, options }) => {
+                const title = route.name;
+                return (
+                  <CustomHeader title={title} options={options.headerStyle} />
+                );
+              },
+            }}
+          />
+          <HomeNav.Screen
             name="CreatePost"
             component={CreatePostsScreen}
             options={{
@@ -29,18 +41,6 @@ const Home = ({ route, navigation }) => {
                 );
               },
               tabBarStyle: { display: 'none' },
-            }}
-          />
-          <HomeNav.Screen
-            name="Posts"
-            component={PostsScreen}
-            options={{
-              header: ({ navigation, route, options }) => {
-                const title = route.name;
-                return (
-                  <CustomHeader title={title} options={options.headerStyle} />
-                );
-              },
             }}
           />
           <HomeNav.Screen
