@@ -106,7 +106,7 @@ const Post = ({ data }) => {
 export const postStyles = StyleSheet.create({
   container: {
     position: 'relative',
-    marginBottom: 15,
+    marginBottom: 34,
   },
   image: {
     width: '100%',
